@@ -1,0 +1,78 @@
+﻿@model UsersChat.Models.UserList
+@{
+    ViewBag.Title = "Users";
+}
+<div class="form-horizontal">
+    <h4>List of users</h4>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col"><input type="checkbox" name="Test1" onclick="SetAllCheckBoxes(this)" /></th>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Date of Regitration</th>
+                <th scope="col">Last login</th>
+                <th scope="col">Banned</th>
+            </tr>
+        </thead>
+        <tbody>
+            @using (Html.BeginForm())
+            {
+
+                @for (int i = 0; i < Model.Users.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(m => Model.Users[i].IsChecked)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => Model.Users[i].Id)
+                            @Html.HiddenFor(m => Model.Users[i].Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => Model.Users[i].Name)
+                            @Html.HiddenFor(m => Model.Users[i].Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => Model.Users[i].Email)
+                            @Html.HiddenFor(m => Model.Users[i].Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => Model.Users[i].DateOfRegitration)
+                            @Html.HiddenFor(m => Model.Users[i].DateOfRegitration)
+                            @Html.HiddenFor(m => Model.Users[i].Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => Model.Users[i].LastLogin)
+                            @Html.HiddenFor(m => Model.Users[i].LastLogin)
+                        </td>
+                        <td>
+                           @if (Model.Users[i].IsBanned) { <p>Banned</p>} else {<p>Active</p> }
+                            @Html.HiddenFor(m => Model.Users[i].IsBanned)
+                        </td>
+                    </tr>
+                }
+
+                <div >
+                    <input type="submit" name="action" value="Block" class="btn btn-danger" />
+
+                    <input type="submit" name="action" value="Unblock" class="btn btn-light" />
+
+                    <input type="submit" name="action" value="Delete" class="btn btn-dark" />
+                </div>
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+    function SetAllCheckBoxes(obj) {
+        var c = new Array();
+        c = document.getElementsByTagName('input');
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox') {
+                c[i].checked = obj.checked;
+            }
+        }
+    }</script>
